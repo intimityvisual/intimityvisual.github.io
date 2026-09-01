@@ -1,333 +1,402 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Intimity Visual</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intimity Visual</title>
 
-  <style>
-    :root {
-      --background: #0d0d12;
-      --card: #171720;
-      --text: #ffffff;
-      --muted: #a8a8b3;
-      --accent: #d99cff;
-      --accent-hover: #c47bf7;
-    }
+<style>
+  :root {
+    --background: #0d0d12;
+    --card: #171720;
+    --text: #ffffff;
+    --muted: #a8a8b3;
+    --accent: #d99cff;
+    --accent-hover: #c47bf7;
+  }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-      background: var(--background);
-      color: var(--text);
-      font-family: 'Segoe UI', Arial, sans-serif;
-    }
+  body {
+    background: var(--background);
+    color: var(--text);
+    font-family: 'Segoe UI', Arial, sans-serif;
+  }
 
-    header {
-      padding: 60px 20px 40px;
-      text-align: center;
-      background: radial-gradient(circle at top, #3b1d4a 0%, transparent 50%), var(--background);
-    }
+  header {
+    padding: 55px 20px 30px;
+    text-align: center;
+    background: radial-gradient(circle at top, #3b1d4a 0%, transparent 50%), var(--background);
+  }
 
-    header h1 {
-      font-size: clamp(2.2rem, 6vw, 4rem);
-      letter-spacing: 2px;
-      margin-bottom: 12px;
-      background: linear-gradient(90deg, #ffffff, var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+  header h1 {
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, #ffffff, var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 
-    header p {
-      color: var(--muted);
-      font-size: 1.05rem;
-      max-width: 600px;
-      margin: 0 auto 20px;
-    }
+  header p { color: var(--muted); font-size: 1rem; }
 
-    .support-banner {
-      display: inline-block;
-      background: #231b2e;
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      padding: 10px 22px;
-      border-radius: 25px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: 0.3s;
-    }
+  .support-banner {
+    display: inline-block;
+    margin-top: 18px;
+    background: #231b2e;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 10px 22px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: 0.3s;
+  }
 
-    .support-banner:hover {
-      background: var(--accent);
-      color: #0d0d12;
-    }
+  .support-banner:hover { background: var(--accent); color: #0d0d12; }
 
-    .navigation {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      padding: 30px 20px 35px;
-    }
+  /* Breadcrumb / ruta de navegación */
+  .breadcrumb {
+    max-width: 1200px;
+    margin: 25px auto 0;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
 
-    .navigation button {
-      border: 1px solid #3b3b49;
-      border-radius: 30px;
-      padding: 10px 20px;
-      color: var(--text);
-      background: transparent;
-      cursor: pointer;
-      font-size: 0.95rem;
-      transition: 0.25s;
-    }
+  .breadcrumb span {
+    cursor: pointer;
+    transition: 0.2s;
+  }
 
-    .navigation button:hover,
-    .navigation button.active {
-      color: #17111b;
-      background: var(--accent);
-      border-color: var(--accent);
-      font-weight: 600;
-    }
+  .breadcrumb span:hover { color: var(--accent); }
 
-    .gallery {
-      width: min(1200px, 100%);
-      margin: auto;
-      padding: 0 20px 60px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-    }
+  .breadcrumb .current { color: var(--text); font-weight: 600; cursor: default; }
 
-    .card {
-      overflow: hidden;
-      border-radius: 16px;
-      background: var(--card);
-      border: 1px solid #272736;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.25s, border-color 0.25s;
-    }
+  /* Contenedor de carpetas */
+  .folders {
+    width: min(1200px, 100%);
+    margin: 30px auto;
+    padding: 0 20px 60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+  }
 
-    .card:hover {
-      transform: translateY(-5px);
-      border-color: var(--accent);
-    }
+  .folder-card {
+    background: var(--card);
+    border: 1px solid #272736;
+    border-radius: 16px;
+    padding: 35px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.25s;
+  }
 
-    .media-container {
-      position: relative;
-      width: 100%;
-      height: 280px;
-      background: #000;
-      overflow: hidden;
-    }
+  .folder-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--accent);
+    box-shadow: 0 10px 30px rgba(217,156,255,0.15);
+  }
 
-    .card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      cursor: pointer;
-      transition: transform 0.3s;
-    }
+  .folder-card .icon { font-size: 2.8rem; margin-bottom: 12px; }
+  .folder-card h3 { font-size: 1.1rem; margin-bottom: 4px; }
+  .folder-card p { color: var(--muted); font-size: 0.8rem; }
 
-    .card img:hover {
-      transform: scale(1.04);
-    }
+  /* Galería de contenido (videos/fotos) */
+  .gallery {
+    width: min(1200px, 100%);
+    margin: auto;
+    padding: 0 20px 60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
 
-    /* Video incrustado responsivo */
-    .media-container iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
+  .card {
+    overflow: hidden;
+    border-radius: 16px;
+    background: var(--card);
+    border: 1px solid #272736;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s, border-color 0.25s;
+  }
 
-    .card-info {
-      padding: 18px;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-      justify-content: space-between;
-    }
+  .card:hover { transform: translateY(-5px); border-color: var(--accent); }
 
-    .card-info h2 {
-      font-size: 1.1rem;
-      margin-bottom: 6px;
-    }
+  .media-container {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    background: #000;
+    overflow: hidden;
+  }
 
-    .card-info p {
-      color: var(--muted);
-      font-size: 0.88rem;
-      line-height: 1.4;
-      margin-bottom: 16px;
-    }
+  .card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
 
-    .card-actions {
-      display: flex;
-      gap: 10px;
-    }
+  .card img:hover { transform: scale(1.04); }
 
-    .btn-buy {
-      flex: 1;
-      text-align: center;
-      background: var(--accent);
-      color: #0d0d12;
-      padding: 9px 12px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 0.85rem;
-      transition: 0.2s;
-    }
+  .media-container iframe { width: 100%; height: 100%; border: none; }
 
-    .btn-buy:hover {
-      background: var(--accent-hover);
-    }
+  .card-info {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+  }
 
-    footer {
-      padding: 35px 20px;
-      text-align: center;
-      color: var(--muted);
-      border-top: 1px solid #252531;
-      font-size: 0.85rem;
-    }
+  .card-info h2 { font-size: 1.05rem; margin-bottom: 6px; }
+  .card-info p { color: var(--muted); font-size: 0.85rem; margin-bottom: 16px; }
 
-    /* Modal / Lightbox para ver fotos grandes */
-    .lightbox {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      background: rgba(0, 0, 0, 0.95);
-    }
+  .btn-buy {
+    display: block;
+    text-align: center;
+    background: var(--accent);
+    color: #0d0d12;
+    padding: 9px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.85rem;
+    transition: 0.2s;
+  }
 
-    .lightbox.show {
-      display: flex;
-    }
+  .btn-buy:hover { background: var(--accent-hover); }
 
-    .lightbox img {
-      max-width: 90%;
-      max-height: 85vh;
-      border-radius: 10px;
-    }
+  .empty-msg {
+    text-align: center;
+    color: var(--muted);
+    padding: 40px 20px 60px;
+    font-size: 0.95rem;
+  }
 
-    .close {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      color: white;
-      font-size: 2.5rem;
-      cursor: pointer;
-    }
-  </style>
+  footer {
+    padding: 35px 20px;
+    text-align: center;
+    color: var(--muted);
+    border-top: 1px solid #252531;
+    font-size: 0.85rem;
+  }
+
+  .lightbox {
+    display: none;
+    position: fixed; inset: 0; z-index: 100;
+    align-items: center; justify-content: center;
+    padding: 20px;
+    background: rgba(0,0,0,0.95);
+  }
+  .lightbox.show { display: flex; }
+  .lightbox img { max-width: 90%; max-height: 85vh; border-radius: 10px; }
+  .close { position: absolute; top: 20px; right: 30px; color: white; font-size: 2.5rem; cursor: pointer; }
+
+  /* Ocultar todas las vistas menos la activa */
+  .view { display: none; }
+  .view.active { display: block; }
+</style>
 </head>
 
 <body>
 
-  <header>
-    <h1>Intimity Visual</h1>
-    <p>Ediciones visuales originales, fanarts y contenido exclusivo de K-pop.</p>
-    <!-- Enlace a tu plataforma de donación o tienda (ej. Ko-fi, PayPal, Gumroad) -->
-    <a href="https://ko-fi.com" target="_blank" class="support-banner">☕ Apóyame o pide tu edición personalizada</a>
-  </header>
+<header>
+  <h1>Intimity Visual</h1>
+  <p>Ediciones visuales originales, fanarts y contenido exclusivo de K-pop.</p>
+  <a href="https://ko-fi.com" target="_blank" class="support-banner">☕ Apóyame o pide tu edición personalizada</a>
+</header>
 
-  <nav class="navigation">
-    <button class="active" data-category="all">Todo</button>
-    <button data-category="videos">Videos / Edits</button>
-    <button data-category="posters">Posters & Fotos</button>
-  </nav>
+<div class="breadcrumb" id="breadcrumb"></div>
 
-  <main class="gallery">
+<!-- VISTA 0: INICIO -->
+<div class="view active" id="view-home">
+  <div class="folders">
+    <div class="folder-card" onclick="goTo('fotos')">
+      <div class="icon">🖼️</div>
+      <h3>FOTOS</h3>
+      <p>Posters y ediciones</p>
+    </div>
+    <div class="folder-card" onclick="goTo('videos')">
+      <div class="icon">🎬</div>
+      <h3>VIDEOS</h3>
+      <p>Edits por grupo</p>
+    </div>
+  </div>
+</div>
 
-    <!-- TARJETA DE TU VIDEO REAL -->
-    <article class="card" data-category="videos">
+<!-- VISTA 1: FOTOS (directo, sin subcarpetas) -->
+<div class="view" id="view-fotos">
+  <div class="gallery">
+    <article class="card">
       <div class="media-container">
-        <iframe src="https://www.youtube-nocookie.com/embed/3hrJVv4g8rk" 
-                title="K-pop Video Edit" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                allowfullscreen>
-        </iframe>
-      </div>
-      <div class="card-info">
-        <div>
-          <h2>Mi Primer Video Edit</h2>
-          <p>Edición visual exclusiva en alta calidad.</p>
-        </div>
-        <div class="card-actions">
-          <a href="https://ko-fi.com" target="_blank" class="btn-buy">Apoyar / Donar</a>
-        </div>
-      </div>
-    </article>
-    
-    <!-- TARJETA 2: IMAGEN CON LIGHTBOX -->
-    <article class="card" data-category="posters">
-      <div class="media-container">
-        <img src="https://placehold.co/800x1000/24152d/ffffff?text=Poster+Edicion+1" 
-             alt="Poster K-pop Edit">
+        <img src="https://placehold.co/800x1000/24152d/ffffff?text=Poster+1" alt="Poster 1">
       </div>
       <div class="card-info">
         <div>
           <h2>Poster Estilo Cyberpunk</h2>
-          <p>Edición digital creada con texturas y tipografía personalizada.</p>
+          <p>Edición digital original.</p>
         </div>
-        <div class="card-actions">
-          <a href="https://ko-fi.com" target="_blank" class="btn-buy">Adquirir Print / Full Res</a>
-        </div>
+        <a href="https://ko-fi.com" target="_blank" class="btn-buy">Adquirir Full Res</a>
       </div>
     </article>
-
-  </main>
-
-  <footer>
-    © 2026 Intimity Visual · Todos los derechos reservados.
-  </footer>
-
-  <div class="lightbox" id="lightbox">
-    <span class="close" id="close">&times;</span>
-    <img id="lightboxImage" src="" alt="Imagen ampliada">
   </div>
+</div>
 
-  <script>
-    // Filtro por categorías
-    const buttons = document.querySelectorAll(".navigation button");
-    const cards = document.querySelectorAll(".card");
+<!-- VISTA 2: VIDEOS -> muestra carpetas de grupos -->
+<div class="view" id="view-videos">
+  <div class="folders" id="grupos-folders"></div>
+</div>
 
-    buttons.forEach(button => {
-      button.addEventListener("click", () => {
-        buttons.forEach(item => item.classList.remove("active"));
-        button.classList.add("active");
+<!-- VISTA 3: GALERÍA DE UN GRUPO ESPECÍFICO -->
+<div class="view" id="view-grupo">
+  <div class="gallery" id="grupo-gallery"></div>
+</div>
 
-        const category = button.dataset.category;
-        cards.forEach(card => {
-          card.style.display = (category === "all" || card.dataset.category === category) ? "flex" : "none";
-        });
+<footer>© 2026 Intimity Visual · Todos los derechos reservados.</footer>
+
+<div class="lightbox" id="lightbox">
+  <span class="close" id="close">&times;</span>
+  <img id="lightboxImage" src="" alt="Imagen ampliada">
+</div>
+
+<script>
+  // Lista de grupos (agrega/quita los que quieras)
+  const grupos = [
+    "MEOVV", "CLASSY", "BABYMONSTER", "ITZY", "IVE",
+    "HEARTS2HEARTS", "LE SSERAFIM", "STAYC", "DREAMCATCHER"
+  ];
+
+  // Aquí guardas los videos de cada grupo.
+  // Agrega objetos { id: "IDdeYoutube", titulo: "...", desc: "..." } dentro del array de cada grupo.
+  const videosPorGrupo = {
+    "MEOVV": [],
+    "CLASSY": [],
+    "BABYMONSTER": [],
+    "ITZY": [],
+    "IVE": [
+      { id: "3hrJVv4g8rk", titulo: "Mi Primer Video Edit", desc: "Edición visual exclusiva en alta calidad." }
+    ],
+    "HEARTS2HEARTS": [],
+    "LE SSERAFIM": [],
+    "STAYC": [],
+    "DREAMCATCHER": []
+  };
+
+  // Genera las carpetas de grupos dentro de VIDEOS
+  const gruposContainer = document.getElementById("grupos-folders");
+  grupos.forEach(grupo => {
+    const div = document.createElement("div");
+    div.className = "folder-card";
+    div.onclick = () => abrirGrupo(grupo);
+    div.innerHTML = `<div class="icon">📁</div><h3>${grupo}</h3><p>${(videosPorGrupo[grupo] || []).length} video(s)</p>`;
+    gruposContainer.appendChild(div);
+  });
+
+  let grupoActual = null;
+
+  function abrirGrupo(grupo) {
+    grupoActual = grupo;
+    const cont = document.getElementById("grupo-gallery");
+    cont.innerHTML = "";
+
+    const lista = videosPorGrupo[grupo] || [];
+
+    if (lista.length === 0) {
+      cont.innerHTML = `<p class="empty-msg">Todavía no hay videos en ${grupo}. ¡Vuelve pronto!</p>`;
+    } else {
+      lista.forEach(video => {
+        const art = document.createElement("article");
+        art.className = "card";
+        art.innerHTML = `
+          <div class="media-container">
+            <iframe src="https://www.youtube-nocookie.com/embed/${video.id}"
+                    title="${video.titulo}"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+          </div>
+          <div class="card-info">
+            <div>
+              <h2>${video.titulo}</h2>
+              <p>${video.desc}</p>
+            </div>
+            <a href="https://ko-fi.com" target="_blank" class="btn-buy">Apoyar / Donar</a>
+          </div>`;
+        cont.appendChild(art);
       });
-    });
+    }
 
-    // Lightbox para imágenes
-    const lightbox = document.getElementById("lightbox");
-    const lightboxImage = document.getElementById("lightboxImage");
-    const close = document.getElementById("close");
+    goTo("grupo", grupo);
+  }
 
-    document.querySelectorAll(".card img").forEach(image => {
-      image.addEventListener("click", () => {
-        lightboxImage.src = image.src;
-        lightbox.classList.add("show");
-      });
-    });
+  // Navegación entre vistas
+  function goTo(vista, extra) {
+    document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
 
-    close.addEventListener("click", () => lightbox.classList.remove("show"));
-    lightbox.addEventListener("click", (e) => {
-      if (e.target === lightbox) lightbox.classList.remove("show");
+    if (vista === "home") {
+      document.getElementById("view-home").classList.add("active");
+      setBreadcrumb([{ label: "Inicio", target: "home" }]);
+    } else if (vista === "fotos") {
+      document.getElementById("view-fotos").classList.add("active");
+      setBreadcrumb([{ label: "Inicio", target: "home" }, { label: "Fotos" }]);
+    } else if (vista === "videos") {
+      document.getElementById("view-videos").classList.add("active");
+      setBreadcrumb([{ label: "Inicio", target: "home" }, { label: "Videos" }]);
+    } else if (vista === "grupo") {
+      document.getElementById("view-grupo").classList.add("active");
+      setBreadcrumb([
+        { label: "Inicio", target: "home" },
+        { label: "Videos", target: "videos" },
+        { label: extra }
+      ]);
+    }
+  }
+
+  function setBreadcrumb(pasos) {
+    const bc = document.getElementById("breadcrumb");
+    bc.innerHTML = "";
+    pasos.forEach((paso, i) => {
+      const span = document.createElement("span");
+      span.textContent = paso.label;
+      if (paso.target) {
+        span.onclick = () => goTo(paso.target);
+      } else {
+        span.classList.add("current");
+      }
+      bc.appendChild(span);
+      if (i < pasos.length - 1) {
+        const sep = document.createElement("span");
+        sep.textContent = "›";
+        sep.style.cursor = "default";
+        bc.appendChild(sep);
+      }
     });
-  </script>
+  }
+
+  // Lightbox para fotos
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImage = document.getElementById("lightboxImage");
+  document.getElementById("close").addEventListener("click", () => lightbox.classList.remove("show"));
+  lightbox.addEventListener("click", e => { if (e.target === lightbox) lightbox.classList.remove("show"); });
+
+  document.addEventListener("click", e => {
+    if (e.target.tagName === "IMG" && e.target.closest(".card")) {
+      lightboxImage.src = e.target.src;
+      lightbox.classList.add("show");
+    }
+  });
+
+  // Iniciar en Inicio
+  goTo("home");
+</script>
 
 </body>
 </html>
