@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Intimity Visual</title>
+
+  <style>
+    :root {
+      --background: #0d0d12;
+      --card: #171720;
+      --text: #ffffff;
+      --muted: #a8a8b3;
+      --accent: #d99cff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    header {
+      padding: 70px 20px 45px;
+      text-align: center;
+      background:
+        radial-gradient(circle at top, #432654 0%, transparent 45%),
+        var(--background);
+    }
+
+    header h1 {
+      font-size: clamp(2.2rem, 7vw, 4.5rem);
+      letter-spacing: 3px;
+      margin-bottom: 14px;
+    }
+
+    header p {
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .navigation {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 0 20px 35px;
+    }
+
+    .navigation button {
+      border: 1px solid #3b3b49;
+      border-radius: 30px;
+      padding: 10px 18px;
+      color: var(--text);
+      background: transparent;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+
+    .navigation button:hover,
+    .navigation button.active {
+      color: #17111b;
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .gallery {
+      width: min(1200px, 100%);
+      margin: auto;
+      padding: 0 20px 60px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      overflow: hidden;
+      border-radius: 16px;
+      background: var(--card);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 35px rgba(217, 156, 255, 0.2);
+    }
+
+    .card img {
+      display: block;
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+    .card-info {
+      padding: 15px;
+    }
+
+    .card-info h2 {
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+
+    .card-info p {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    footer {
+      padding: 30px 20px;
+      text-align: center;
+      color: var(--muted);
+      border-top: 1px solid #252531;
+      font-size: 0.85rem;
+    }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      align-items: center;
+      justify-content: center;
+      padding: 25px;
+      background: rgba(0, 0, 0, 0.92);
+    }
+
+    .lightbox.show {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 95%;
+      max-height: 90vh;
+      border-radius: 12px;
+    }
+
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 2.5rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Intimity Visual</h1>
+    <p>Original K-pop edits and fan-made visual content</p>
+  </header>
+
+  <nav class="navigation">
+    <button class="active" data-category="all">Todo</button>
+    <button data-category="edits">Ediciones</button>
+    <button data-category="posters">Posters</button>
+    <button data-category="collections">Colecciones</button>
+  </nav>
+
+  <main class="gallery">
+
+    <article class="card" data-category="edits">
+      <img src="https://placehold.co/700x900/24152d/ffffff?text=Tu+edicion+1"
+           alt="Edición K-pop número 1">
+      <div class="card-info">
+        <h2>Edición número 1</h2>
+        <p>Contenido visual original</p>
+      </div>
+    </article>
+
+    <article class="card" data-category="posters">
+      <img src="https://placehold.co/700x900/172637/ffffff?text=Tu+poster+1"
+           alt="Poster K-pop número 1">
+      <div class="card-info">
+        <h2>Poster número 1</h2>
+        <p>Diseño editado por Intimity Visual</p>
+      </div>
+    </article>
+
+    <article class="card" data-category="collections">
+      <img src="https://placehold.co/700x900/382331/ffffff?text=Tu+coleccion+1"
+           alt="Colección K-pop número 1">
+      <div class="card-info">
+        <h2>Colección número 1</h2>
+        <p>Galería de contenido propio</p>
+      </div>
+    </article>
+
+  </main>
+
+  <footer>
+    © 2026 Intimity Visual · Original fan-made visual content
+  </footer>
+
+  <div class="lightbox" id="lightbox">
+    <span class="close" id="close">&times;</span>
+    <img id="lightboxImage" src="" alt="Imagen ampliada">
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll(".navigation button");
+    const cards = document.querySelectorAll(".card");
+
+    buttons.forEach(button => {
+      button.addEventListener("click", () => {
+        buttons.forEach(item => item.classList.remove("active"));
+        button.classList.add("active");
+
+        const category = button.dataset.category;
+
+        cards.forEach(card => {
+          card.style.display =
+            category === "all" || card.dataset.category === category
+              ? "block"
+              : "none";
+        });
+      });
+    });
+
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImage = document.getElementById("lightboxImage");
+    const close = document.getElementById("close");
+
+    document.querySelectorAll(".card img").forEach(image => {
+      image.addEventListener("click", () => {
+        lightboxImage.src = image.src;
+        lightbox.classList.add("show");
+      });
+    });
+
+    close.addEventListener("click", () => {
+      lightbox.classList.remove("show");
+    });
+
+    lightbox.addEventListener("click", event => {
+      if (event.target === lightbox) {
+        lightbox.classList.remove("show");
+      }
+    });
+  </script>
+
+</body>
+</html>
