@@ -28,9 +28,8 @@
   }
 
   header {
-    padding: 60px 20px 40px;
+    padding: 60px 20px 30px;
     text-align: center;
-    /* Fondo mucho más sutil y tenue, sin morados saturados */
     background: radial-gradient(circle at 50% 0%, rgba(140, 70, 200, 0.12) 0%, transparent 60%), var(--background);
   }
 
@@ -48,7 +47,6 @@
     letter-spacing: 0.5px;
   }
 
-  /* Foto de perfil más grande */
   .profile-pic {
     width: 170px;
     height: 170px;
@@ -63,14 +61,6 @@
 
   .profile-pic:hover {
     transform: scale(1.03);
-  }
-
-  .bio-text {
-    color: var(--muted);
-    font-size: 1.05rem;
-    max-width: 550px;
-    margin: 0 auto 24px;
-    line-height: 1.5;
   }
 
   .support-banner {
@@ -113,17 +103,62 @@
     border-color: var(--accent);
   }
 
-  /* Botón a la izquierda */
+  /* Sección izquierda de Intimity Visual Idols */
   .left-container {
     max-width: 1200px;
     margin: 25px auto 0;
     padding: 0 20px;
     text-align: left;
+    width: 100%;
   }
 
-  .btn-left {
+  .idols-header-block {
     display: inline-block;
     cursor: pointer;
+    background: transparent;
+    padding: 4px 0;
+  }
+
+  .idols-small-label {
+    text-align: left;
+    font-size: 0.68rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+
+  .idols-title {
+    text-align: left;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text);
+    transition: color 0.25s;
+  }
+
+  .idols-header-block:hover .idols-title {
+    color: var(--accent);
+  }
+
+  .home-description {
+    max-width: 580px;
+    margin: 30px auto 0;
+    padding: 0 20px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 1.02rem;
+    line-height: 1.6;
+  }
+
+  .idols-bio-text {
+    max-width: 580px;
+    margin: 0 auto 30px;
+    padding: 0 20px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.6;
   }
 
   /* Breadcrumb */
@@ -136,6 +171,7 @@
     gap: 8px;
     color: var(--muted);
     font-size: 0.95rem;
+    width: 100%;
   }
 
   .breadcrumb span {
@@ -149,8 +185,8 @@
   /* Carpetas traslúcidas */
   .folders {
     width: min(1200px, 100%);
-    margin: 30px auto;
-    padding: 0 20px 60px;
+    margin: 20px auto 60px;
+    padding: 0 20px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 22px;
@@ -178,7 +214,7 @@
   .folder-card h3 { font-size: 1.1rem; margin-bottom: 5px; font-weight: 700; }
   .folder-card p { color: var(--muted); font-size: 0.85rem; }
 
-  /* Galería de tarjetas */
+  /* Galería */
   .gallery {
     width: min(1200px, 100%);
     margin: auto;
@@ -292,28 +328,31 @@
        alt="Logo UNIVERSE" 
        class="profile-pic">
 
-  <p class="bio-text">Ediciones visuales originales, fanarts y contenido exclusivo de K-pop.</p>
-
   <a href="https://ko-fi.com" target="_blank" class="support-banner">☕ Apóyame o pide tu edición personalizada</a>
 
-  <!-- Entrar al mundo de UNIVERSE abre la sección de Videos -->
   <div class="cta-enter" onclick="goTo('videos')">
     <span>Clickea aquí para entrar al mundo de UNIVERSE</span>
   </div>
 </header>
 
-<!-- Botón lateral Intimity Visual Idols -->
-<div class="left-container">
-  <button class="support-banner btn-left" onclick="goTo('idols-menu')">Intimity Visual Idols</button>
-</div>
-
 <div class="breadcrumb" id="breadcrumb"></div>
 
-<!-- VISTA 0: INICIO (Portada limpia) -->
-<div class="view active" id="view-home"></div>
+<!-- VISTA 0: PORTADA DE INICIO -->
+<div class="view active" id="view-home">
+  <div class="left-container">
+    <div class="idols-header-block" onclick="goTo('idols-menu')">
+      <p class="idols-small-label">Galería de videos zoomfocuscam</p>
+      <h2 class="idols-title">Intimity Visual Idols</h2>
+    </div>
+  </div>
+  <p class="home-description">
+    Un espacio de rol y contenido K-pop donde podrás familiarizarte y compartir con personas que tienen tus mismos gustos y hobbies. ¡Únete a la comunidad y diviértete con nosotros!
+  </p>
+</div>
 
 <!-- VISTA 1: MENÚ INTIMITY VISUAL IDOLS (Aquí están PICS y VIDEOS) -->
 <div class="view" id="view-idols-menu">
+  <p class="idols-bio-text">Ediciones visuales originales, fanarts y contenido exclusivo de K-pop.</p>
   <div class="folders">
     <div class="folder-card" onclick="goTo('fotos')">
       <div class="icon">🔥 🍑</div>
