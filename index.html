@@ -3,16 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Intimity Visual</title>
+<title>UNIVERSE · Intimity Visual Idols</title>
 
 <style>
   :root {
-    --background: #0d0d12;
-    --card: #171720;
+    --background: #09090d;
+    --card-bg: rgba(23, 23, 32, 0.45);
+    --card-border: rgba(255, 255, 255, 0.08);
     --text: #ffffff;
-    --muted: #a8a8b3;
-    --accent: #d99cff;
-    --accent-hover: #c47bf7;
+    --muted: #a0a0b0;
+    --accent: #c48df5;
+    --accent-hover: #b070ec;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -20,86 +21,115 @@
   body {
     background: var(--background);
     color: var(--text);
-    font-family: 'Segoe UI', Arial, sans-serif;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
 
   header {
-    padding: 55px 20px 30px;
+    padding: 60px 20px 40px;
     text-align: center;
-    background: radial-gradient(circle at top, #3b1d4a 0%, transparent 50%), var(--background);
+    /* Fondo mucho más sutil y tenue, sin morados saturados */
+    background: radial-gradient(circle at 50% 0%, rgba(140, 70, 200, 0.12) 0%, transparent 60%), var(--background);
   }
 
   header h1 {
-    font-size: clamp(2.2rem, 6vw, 4rem);
-    letter-spacing: 2px;
-    margin-bottom: 10px;
-    background: linear-gradient(90deg, #ffffff, var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: clamp(2.6rem, 7vw, 4.4rem);
+    letter-spacing: 4px;
+    margin-bottom: 6px;
+    font-weight: 800;
   }
 
-  header p { color: var(--muted); font-size: 1rem; }
+  .subtitle-collab {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Foto de perfil más grande */
+  .profile-pic {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    margin: 0 auto 24px;
+    display: block;
+    box-shadow: 0 0 35px rgba(196, 141, 245, 0.2);
+    transition: transform 0.3s ease;
+  }
+
+  .profile-pic:hover {
+    transform: scale(1.03);
+  }
+
+  .bio-text {
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 550px;
+    margin: 0 auto 24px;
+    line-height: 1.5;
+  }
 
   .support-banner {
     display: inline-block;
-    margin-top: 18px;
-    background: #231b2e;
-    border: 1px solid var(--accent);
+    background: rgba(35, 27, 46, 0.6);
+    border: 1px solid rgba(196, 141, 245, 0.4);
     color: var(--accent);
-    padding: 10px 22px;
+    padding: 10px 24px;
     border-radius: 25px;
     text-decoration: none;
     font-weight: 600;
-    font-size: 0.9rem;
-    transition: 0.3s;
+    font-size: 0.92rem;
+    transition: 0.25s;
+    backdrop-filter: blur(8px);
   }
 
-  .support-banner:hover { background: var(--accent); color: #0d0d12; }
-  .subtitle-collab {
-  color: var(--muted);
-  font-size: 0.9rem;
-  margin-top: -6px;
-  margin-bottom: 20px;
-}
+  .support-banner:hover {
+    background: var(--accent);
+    color: #0d0d12;
+    border-color: var(--accent);
+  }
 
-.profile-pic {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--accent);
-  margin-bottom: 20px;
-  box-shadow: 0 0 20px rgba(217, 156, 255, 0.25);
-}
+  .cta-enter {
+    max-width: 440px;
+    margin: 24px auto 0;
+    padding: 15px 22px;
+    border: 1px dashed rgba(196, 141, 245, 0.5);
+    border-radius: 12px;
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: 0.25s;
+    background: rgba(255, 255, 255, 0.02);
+  }
 
-.cta-enter {
-  max-width: 420px;
-  margin: 25px auto 0;
-  padding: 16px 20px;
-  border: 1px dashed var(--accent);
-  border-radius: 12px;
-  color: var(--text);
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.25s;
-}
+  .cta-enter:hover {
+    background: rgba(196, 141, 245, 0.08);
+    border-style: solid;
+    border-color: var(--accent);
+  }
 
-.cta-enter:hover {
-  background: rgba(217, 156, 255, 0.08);
-  border-style: solid;
-}
-
-.banner-left {
-  display: block;
-  width: fit-content;
-  margin: 18px 0 0 20px;
-  text-align: left;
-}
-
-  /* Breadcrumb / ruta de navegación */
-  .breadcrumb {
+  /* Botón a la izquierda */
+  .left-container {
     max-width: 1200px;
     margin: 25px auto 0;
+    padding: 0 20px;
+    text-align: left;
+  }
+
+  .btn-left {
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  /* Breadcrumb */
+  .breadcrumb {
+    max-width: 1200px;
+    margin: 20px auto 0;
     padding: 0 20px;
     display: flex;
     align-items: center;
@@ -114,40 +144,41 @@
   }
 
   .breadcrumb span:hover { color: var(--accent); }
-
   .breadcrumb .current { color: var(--text); font-weight: 600; cursor: default; }
 
-  /* Contenedor de carpetas */
+  /* Carpetas traslúcidas */
   .folders {
     width: min(1200px, 100%);
     margin: 30px auto;
     padding: 0 20px 60px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 22px;
   }
 
   .folder-card {
-    background: var(--card);
-    border: 1px solid #272736;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 16px;
     padding: 35px 20px;
     text-align: center;
     cursor: pointer;
     transition: 0.25s;
+    backdrop-filter: blur(10px);
   }
 
   .folder-card:hover {
-    transform: translateY(-6px);
-    border-color: var(--accent);
-    box-shadow: 0 10px 30px rgba(217,156,255,0.15);
+    transform: translateY(-5px);
+    border-color: rgba(196, 141, 245, 0.5);
+    background: rgba(30, 30, 42, 0.6);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
   }
 
   .folder-card .icon { font-size: 2.8rem; margin-bottom: 12px; }
-  .folder-card h3 { font-size: 1.1rem; margin-bottom: 4px; }
-  .folder-card p { color: var(--muted); font-size: 0.8rem; }
+  .folder-card h3 { font-size: 1.1rem; margin-bottom: 5px; font-weight: 700; }
+  .folder-card p { color: var(--muted); font-size: 0.85rem; }
 
-  /* Galería de contenido (videos/fotos) */
+  /* Galería de tarjetas */
   .gallery {
     width: min(1200px, 100%);
     margin: auto;
@@ -160,15 +191,19 @@
   .card {
     overflow: hidden;
     border-radius: 16px;
-    background: var(--card);
-    border: 1px solid #272736;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     box-shadow: 0 8px 25px rgba(0,0,0,0.3);
     display: flex;
     flex-direction: column;
     transition: transform 0.25s, border-color 0.25s;
+    backdrop-filter: blur(10px);
   }
 
-  .card:hover { transform: translateY(-5px); border-color: var(--accent); }
+  .card:hover { 
+    transform: translateY(-5px); 
+    border-color: rgba(196, 141, 245, 0.4); 
+  }
 
   .media-container {
     position: relative;
@@ -186,7 +221,6 @@
   }
 
   .card img:hover { transform: scale(1.04); }
-
   .media-container iframe { width: 100%; height: 100%; border: none; }
 
   .card-info {
@@ -220,13 +254,15 @@
     color: var(--muted);
     padding: 40px 20px 60px;
     font-size: 0.95rem;
+    grid-column: 1 / -1;
   }
 
   footer {
+    margin-top: auto;
     padding: 35px 20px;
     text-align: center;
     color: var(--muted);
-    border-top: 1px solid #252531;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
     font-size: 0.85rem;
   }
 
@@ -241,7 +277,6 @@
   .lightbox img { max-width: 90%; max-height: 85vh; border-radius: 10px; }
   .close { position: absolute; top: 20px; right: 30px; color: white; font-size: 2.5rem; cursor: pointer; }
 
-  /* Ocultar todas las vistas menos la activa */
   .view { display: none; }
   .view.active { display: block; }
 </style>
@@ -254,49 +289,56 @@
   <p class="subtitle-collab">en colaboración con Intimity Visual Idols</p>
 
   <img src="https://cdn.abacus.ai/images/3f5c785e-fbfd-4041-86d4-373967f86a98.png" 
-       alt="Foto de perfil UNIVERSE" 
+       alt="Logo UNIVERSE" 
        class="profile-pic">
 
-  <p>Ediciones visuales originales, fanarts y contenido exclusivo de K-pop.</p>
+  <p class="bio-text">Ediciones visuales originales, fanarts y contenido exclusivo de K-pop.</p>
 
   <a href="https://ko-fi.com" target="_blank" class="support-banner">☕ Apóyame o pide tu edición personalizada</a>
 
+  <!-- Entrar al mundo de UNIVERSE abre la sección de Videos -->
   <div class="cta-enter" onclick="goTo('videos')">
     <span>Clickea aquí para entrar al mundo de UNIVERSE</span>
   </div>
-
-  <a href="https://ko-fi.com" target="_blank" class="support-banner banner-left">Intimity Visual Idols</a>
 </header>
+
+<!-- Botón lateral Intimity Visual Idols -->
+<div class="left-container">
+  <button class="support-banner btn-left" onclick="goTo('idols-menu')">Intimity Visual Idols</button>
+</div>
 
 <div class="breadcrumb" id="breadcrumb"></div>
 
-<!-- VISTA 0: INICIO -->
-<div class="view active" id="view-home">
+<!-- VISTA 0: INICIO (Portada limpia) -->
+<div class="view active" id="view-home"></div>
+
+<!-- VISTA 1: MENÚ INTIMITY VISUAL IDOLS (Aquí están PICS y VIDEOS) -->
+<div class="view" id="view-idols-menu">
   <div class="folders">
     <div class="folder-card" onclick="goTo('fotos')">
-      <div class="icon">🔥🍑</div>
+      <div class="icon">🔥 🍑</div>
       <h3>PICS INTIMITYZONE</h3>
       <p>Posters y ediciones</p>
     </div>
     <div class="folder-card" onclick="goTo('videos')">
-      <div class="icon">🎬💦</div>
+      <div class="icon">🎬 💦</div>
       <h3>VIDEOS ZOOMFOCUSCAM</h3>
       <p>Edits por grupo</p>
     </div>
   </div>
 </div>
 
-<!-- VISTA 1: FOTOS (directo, sin subcarpetas) -->
+<!-- VISTA 2: PICS INTIMITYZONE -->
 <div class="view" id="view-fotos">
   <div class="gallery">
     <article class="card">
       <div class="media-container">
-        <img src="https://placehold.co/800x1000/24152d/ffffff?text=Poster+1" alt="Poster 1">
+        <img src="https://placehold.co/800x1000/171720/ffffff?text=Poster+1" alt="Poster 1">
       </div>
       <div class="card-info">
         <div>
-          <h2>Poster Estilo Cyberpunk</h2>
-          <p>Edición digital original.</p>
+          <h2>Poster Edición Especial</h2>
+          <p>Edición digital en alta calidad.</p>
         </div>
         <a href="https://ko-fi.com" target="_blank" class="btn-buy">Adquirir Full Res</a>
       </div>
@@ -304,12 +346,12 @@
   </div>
 </div>
 
-<!-- VISTA 2: VIDEOS -> muestra carpetas de grupos -->
+<!-- VISTA 3: VIDEOS ZOOMFOCUSCAM (Carpetas de grupos) -->
 <div class="view" id="view-videos">
   <div class="folders" id="grupos-folders"></div>
 </div>
 
-<!-- VISTA 3: GALERÍA DE UN GRUPO ESPECÍFICO -->
+<!-- VISTA 4: VIDEOS DE UN GRUPO -->
 <div class="view" id="view-grupo">
   <div class="gallery" id="grupo-gallery"></div>
 </div>
@@ -322,14 +364,11 @@
 </div>
 
 <script>
-  // Lista de grupos (agrega/quita los que quieras)
   const grupos = [
     "MEOVV", "CLASSY", "BABYMONSTER", "ITZY", "IVE",
     "HEARTS2HEARTS", "LE SSERAFIM", "STAYC", "DREAMCATCHER"
   ];
 
-  // Aquí guardas los videos de cada grupo.
-  // Agrega objetos { id: "IDdeYoutube", titulo: "...", desc: "..." } dentro del array de cada grupo.
   const videosPorGrupo = {
     "MEOVV": [],
     "CLASSY": [],
@@ -344,7 +383,6 @@
     "DREAMCATCHER": []
   };
 
-  // Genera las carpetas de grupos dentro de VIDEOS
   const gruposContainer = document.getElementById("grupos-folders");
   grupos.forEach(grupo => {
     const div = document.createElement("div");
@@ -354,10 +392,7 @@
     gruposContainer.appendChild(div);
   });
 
-  let grupoActual = null;
-
   function abrirGrupo(grupo) {
-    grupoActual = grupo;
     const cont = document.getElementById("grupo-gallery");
     cont.innerHTML = "";
 
@@ -390,24 +425,36 @@
     goTo("grupo", grupo);
   }
 
-  // Navegación entre vistas
   function goTo(vista, extra) {
     document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
 
     if (vista === "home") {
       document.getElementById("view-home").classList.add("active");
-      setBreadcrumb([{ label: "Inicio", target: "home" }]);
+      setBreadcrumb([]);
+    } else if (vista === "idols-menu") {
+      document.getElementById("view-idols-menu").classList.add("active");
+      setBreadcrumb([
+        { label: "Inicio", target: "home" },
+        { label: "Intimity Visual Idols" }
+      ]);
     } else if (vista === "fotos") {
       document.getElementById("view-fotos").classList.add("active");
-      setBreadcrumb([{ label: "Inicio", target: "home" }, { label: "Fotos" }]);
+      setBreadcrumb([
+        { label: "Inicio", target: "home" },
+        { label: "Intimity Visual Idols", target: "idols-menu" },
+        { label: "PICS INTIMITYZONE" }
+      ]);
     } else if (vista === "videos") {
       document.getElementById("view-videos").classList.add("active");
-      setBreadcrumb([{ label: "Inicio", target: "home" }, { label: "Videos" }]);
+      setBreadcrumb([
+        { label: "Inicio", target: "home" },
+        { label: "VIDEOS ZOOMFOCUSCAM" }
+      ]);
     } else if (vista === "grupo") {
       document.getElementById("view-grupo").classList.add("active");
       setBreadcrumb([
         { label: "Inicio", target: "home" },
-        { label: "Videos", target: "videos" },
+        { label: "VIDEOS ZOOMFOCUSCAM", target: "videos" },
         { label: extra }
       ]);
     }
@@ -434,7 +481,6 @@
     });
   }
 
-  // Lightbox para fotos
   const lightbox = document.getElementById("lightbox");
   const lightboxImage = document.getElementById("lightboxImage");
   document.getElementById("close").addEventListener("click", () => lightbox.classList.remove("show"));
@@ -447,7 +493,6 @@
     }
   });
 
-  // Iniciar en Inicio
   goTo("home");
 </script>
 
