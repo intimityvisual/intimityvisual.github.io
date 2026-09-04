@@ -84,6 +84,7 @@
   }
 
   .cta-enter {
+    display: block;
     max-width: 440px;
     margin: 24px auto 0;
     padding: 15px 22px;
@@ -92,11 +93,11 @@
     color: var(--text);
     font-weight: 600;
     font-size: 0.95rem;
+    text-decoration: none;
     cursor: pointer;
     transition: 0.25s;
     background: rgba(255, 255, 255, 0.02);
   }
-
   .cta-enter:hover {
     background: rgba(196, 141, 245, 0.08);
     border-style: solid;
@@ -321,18 +322,22 @@
 <body>
 
 <header>
-  <h1>UNIVERSE</h1>
+  <h1>🔥UNIVERSE KPOP ROL🔥 </h1>
   <p class="subtitle-collab">en colaboración con Intimity Visual Idols</p>
 
   <img src="https://cdn.abacus.ai/images/3f5c785e-fbfd-4041-86d4-373967f86a98.png" 
        alt="Logo UNIVERSE" 
        class="profile-pic">
 
+  <p class="home-description">
+    Un espacio de rol y contenido K-pop donde podrás familiarizarte y compartir con personas que tienen tus mismos gustos y hobbies. ¡Únete a la comunidad y diviértete con nosotros!
+  </p>
+
   <a href="https://ko-fi.com" target="_blank" class="support-banner">☕ Apóyame o pide tu edición personalizada</a>
 
-  <div class="cta-enter" onclick="goTo('videos')">
+  <a href="https://t.me/Universe_idol/" target="_blank" class="cta-enter">
     <span>Clickea aquí para entrar al mundo de UNIVERSE</span>
-  </div>
+  </a>
 </header>
 
 <div class="breadcrumb" id="breadcrumb"></div>
@@ -345,9 +350,7 @@
       <h2 class="idols-title">Intimity Visual Idols</h2>
     </div>
   </div>
-  <p class="home-description">
-    Un espacio de rol y contenido K-pop donde podrás familiarizarte y compartir con personas que tienen tus mismos gustos y hobbies. ¡Únete a la comunidad y diviértete con nosotros!
-  </p>
+  <div class="gallery" id="home-gallery"></div>
 </div>
 
 <!-- VISTA 1: MENÚ INTIMITY VISUAL IDOLS (Aquí están PICS y VIDEOS) -->
@@ -532,6 +535,39 @@
     }
   });
 
+  function poblarHomeGallery() {
+    const cont = document.getElementById("home-gallery");
+    if (!cont) return;
+    cont.innerHTML = "";
+
+    Object.keys(videosPorGrupo).forEach(grupo => {
+      videosPorGrupo[grupo].forEach(video => {
+        const art = document.createElement("article");
+        art.className = "card";
+        art.innerHTML = `
+          <div class="media-container">
+            <iframe src="https://www.youtube-nocookie.com/embed/${video.id}"
+                    title="${video.titulo}"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+          </div>
+          <div class="card-info">
+            <div>
+              <h2>${video.titulo}</h2>
+              <p>${video.desc}</p>
+            </div>
+            <a href="https://ko-fi.com" target="_blank" class="btn-buy">Apoyar / Donar</a>
+          </div>`;
+        cont.appendChild(art);
+      });
+    });
+
+    if (cont.innerHTML === "") {
+      cont.innerHTML = `<p class="empty-msg">Todavía no hay videos publicados. ¡Vuelve pronto!</p>`;
+    }
+  }
+
+  poblarHomeGallery();
   goTo("home");
 </script>
 
