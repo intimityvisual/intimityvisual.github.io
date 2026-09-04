@@ -24,9 +24,13 @@ html {
 
 body {
   min-height: 100vh;
+  color: var(--text);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  display: flex;
+  flex-direction: column;
   background:
     linear-gradient(rgba(10, 10, 15, 0.88), rgba(10, 10, 15, 0.88)),
-    url("https://cdn.abacus.ai/images/51a0dd81-b48d-4ba3-9902-8eeccbfbcf6c.png") center top/cover no-repeat fixed;
+    url("https://cdn.abacus.ai/images/51a0dd81-b48d-4ba3-9902-8eeccbfbcf6c.png") center top / cover no-repeat fixed;
 }
 
   header {
@@ -318,8 +322,6 @@ body {
 
   .view { display: none; }
   .view.active { display: block; }
-.view { display: none; }
-      .view.active { display: block; }
 
       /* ==== Ajuste de galería estilo shorts/reels ==== */
       .gallery {
@@ -375,25 +377,57 @@ body {
           gap: 10px !important;
         }
       }
+/* Tres tarjetas compactas juntas */
 .botones-fila {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 14px;
-  margin-top: 24px;
+  width: min(700px, 100%);
+  margin: 24px auto 0;
+  padding: 0 10px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  align-items: stretch;
 }
 
 .botones-fila .support-banner,
 .botones-fila .cta-enter {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  min-height: 72px;
+  height: auto;
   margin: 0 !important;
-  flex: 1 1 260px;
-  max-width: 320px;
+  padding: 10px 8px;
+  border-radius: 12px;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  font-size: 0.78rem;
+  line-height: 1.25;
 }
 
+.botones-fila .cta-enter span {
+  font-size: inherit !important;
+  line-height: inherit;
+}
+
+/* Mantener las tres tarjetas juntas en teléfonos */
 @media (max-width: 600px) {
   .botones-fila {
-    flex-direction: column;
-    align-items: center;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    padding: 0 8px;
+  }
+
+  .botones-fila .support-banner,
+  .botones-fila .cta-enter {
+    min-height: 64px;
+    padding: 8px 5px;
+    font-size: 0.66rem;
+    border-radius: 9px;
   }
 }
   .card-info h2,
