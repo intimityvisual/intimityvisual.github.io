@@ -530,67 +530,136 @@ body {
 </div>
 
 <script>
-  const grupos = [
-    "MEOVV", "CLASSY", "BABYMONSTER", "ITZY", "IVE",
-    "HEARTS2HEARTS", "LE SSERAFIM", "STAYC", "DREAMCATCHER"
-  ];
+  const API_CONTENIDO = 'https://script.google.com/macros/s/AKfycbx2xN15s-E0W_-rOUG92l72DMcBMa0_9ZG0RN1ymEMZ3MmgVqDGn6nazc8iS5EoOjbv/exec';
 
-  const videosPorGrupo = {
-    "MEOVV": [],
-    "CLASSY": [],
-    "BABYMONSTER": [],
-    "ITZY": [],
-    "IVE": [
-{ id: "3hrJVv4g8rk", titulo: "meovv - anna", desc: "" }
-    ],
-    "HEARTS2HEARTS": [],
-    "LE SSERAFIM": [],
-    "STAYC": [],
-    "DREAMCATCHER": []
-  };
+const grupos = [
+  "MEOVV", "CLASSY", "BABYMONSTER", "ITZY", "IVE",
+  "HEARTS2HEARTS", "LE SSERAFIM", "STAYC", "DREAMCATCHER"
+];
 
+let videosPorGrupo = {};
+grupos.forEach(g => { videosPorGrupo[g] = []; });
+
+// Función para extraer el ID de YouTube desde cualquier enlace
+function obtenerYoutubeId(url) {
+  if (!url) return '';
+  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+  return match ? match[1] : url;
+}
+
+// Cargar datos desde Google Sheets
+async function cargarContenidoSheets() {
+  try {
+    const res = await fetch(API_CONTENIDO);
+    const datos = await res.json();
+    
+    // Reiniciar listas
+    grupos.forEach(g => { videosPorGrupo[g] = []; });
+    
+    datos.forEach(item => {
+      const g = (item.grupo || '').trim().toUpperCase();
+      const videoObj = {
+        id: obtenerYoutubeId(item.youtube_url),
+        titulo: item.titulo || '',
+        desc: item.descripcion || ''
+      };
+      
+      if (videosPorGrupo[g]) {
+        videosPorGrupo[g].push(videoObj);
+      } else {
+        videosPorGrupo[g] = [videoObj];
+      }
+    });
+    
+    renderCarpetasGrupos();
+    renderHomeGallery(datos);
+  } catch (e) {
+    console.error("Error al cargar contenido de Sheets:", e);
+  }
+}
+
+function renderCarpetasGrupos() {
   const gruposContainer = document.getElementById("grupos-folders");
+  if (!gruposContainer) return;
+  gruposContainer.innerHTML = "";
+  
   grupos.forEach(grupo => {
     const div = document.createElement("div");
     div.className = "folder-card";
     div.onclick = () => abrirGrupo(grupo);
-    div.innerHTML = `<div class="icon">📁</div><h3>${grupo}</h3><p>${(videosPorGrupo[grupo] || []).length} video(s)</p>`;
+    const total = (videosPorGrupo[grupo] || []).length;
+    div.innerHTML = `<div>📂</div><h3>${grupo}</h3><p>${total} video(s)</p>`;
     gruposContainer.appendChild(div);
   });
+}
 
-  function abrirGrupo(grupo) {
-    const cont = document.getElementById("grupo-gallery");
-    cont.innerHTML = "";
+function renderHomeGallery(datos) {
+  const homeGallery = document.getElementById("home-gallery");
+  if (!homeGallery) return;
+  homeGallery.innerHTML = "";
+  
+  const videosHome = datos.filter(d => (d.categoría || '').toLowerCase() === 'videos');
+  if (videosHome.length === 0) {
+    homeGallery.innerHTML = '<p class="empty-msg">No hay videos en portada por ahora.</p>';
+    return;
+  }
+  
+  videosHome.forEach(video => {
+    const ytid = obtenerYoutubeId(video.youtube_url);
+    const art = document.createElement("article");
+    art.className = "card";
+    art.innerHTML = `
+      <div class="media-container">
+        <iframe src="https://www.youtube-nocookie.com/embed/${ytid}"
+                title="${video.titulo}"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+      </div>
+      <div class="card-info">
+        <div>
+          <h2>${video.titulo}</h2>
+          <p>${video.descripcion || ''}</p>
+        </div>
+      </div>
+    `;
+    homeGallery.appendChild(art);
+  });
+}
 
-    const lista = videosPorGrupo[grupo] || [];
+function abrirGrupo(grupo) {
+  const cont = document.getElementById("grupo-gallery");
+  cont.innerHTML = "";
 
-    if (lista.length === 0) {
-      cont.innerHTML = `<p class="empty-msg">Todavía no hay videos en ${grupo}. ¡Vuelve pronto!</p>`;
-    } else {
-      lista.forEach(video => {
-        const art = document.createElement("article");
-        art.className = "card";
-        art.innerHTML = `
-          <div class="media-container">
-            <iframe src="https://www.youtube-nocookie.com/embed/${video.id}"
-                    title="${video.titulo}"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen></iframe>
+  const lista = videosPorGrupo[grupo] || [];
+
+  if (lista.length === 0) {
+    cont.innerHTML = `<p class="empty-msg">Todavía no hay videos en ${grupo}. ¡Vuelve pronto!</p>`;
+  } else {
+    lista.forEach(video => {
+      const art = document.createElement("article");
+      art.className = "card";
+      art.innerHTML = `
+        <div class="media-container">
+          <iframe src="https://www.youtube-nocookie.com/embed/${video.id}"
+                  title="${video.titulo}"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen></iframe>
+        </div>
+        <div class="card-info">
+          <div>
+            <h2>${video.titulo}</h2>
+            <p>${video.desc}</p>
           </div>
-          <div class="card-info">
-            <div>
-              <h2>${video.titulo}</h2>
-              <p>${video.desc}</p>
-            </div>
-          </div>`;
-        cont.appendChild(art);
-      });
-    }
-
-    goTo("grupo", grupo);
+        </div>`;
+      cont.appendChild(art);
+    });
   }
 
-  function goTo(vista, extra) {
+  goTo("grupo", grupo);
+}
+
+// Iniciar la carga al abrir la página
+cargarContenidoSheets();  function goTo(vista, extra) {
     document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
 
     if (vista === "home") {
