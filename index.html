@@ -19,7 +19,9 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    background: var(--background);
+    background:
+  linear-gradient(rgba(10, 10, 15, 0.88), rgba(10, 10, 15, 0.88)),
+  url("https://cdn.abacus.ai/images/51a0dd81-b48d-4ba3-9902-8eeccbfbcf6c.png") center/cover no-repeat fixed;
     color: var(--text);
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     min-height: 100vh;
@@ -416,6 +418,9 @@
     <a href="https://t.me/TU_GRUPO_AQUI" target="_blank" class="cta-enter">
       <span>Clickea aquí para entrar al mundo de UNIVERSE</span>
     </a>
+    <div class="cta-enter" onclick="goTo('idols-menu')" style="cursor:pointer;">
+      <span>Intimity Visual Idols</span>
+    </div>
   </div>
 </header>
 
@@ -424,10 +429,7 @@
 <!-- VISTA 0: PORTADA DE INICIO -->
 <div class="view active" id="view-home">
   <div class="left-container">
-    <div class="idols-header-block" onclick="goTo('idols-menu')">
-      <p class="idols-small-label">Galería de videos</p>
-      <h2 class="idols-title">Intimity Visual Idols</h2>
-    </div>
+    <p class="idols-small-label">Gallery preview</p>
   </div>
   <div class="gallery" id="home-gallery"></div>
 </div>
@@ -539,7 +541,6 @@
               <h2>${video.titulo}</h2>
               <p>${video.desc}</p>
             </div>
-            <a href="https://ko-fi.com" target="_blank" class="btn-buy">Apoyar / Donar</a>
           </div>`;
         cont.appendChild(art);
       });
@@ -637,7 +638,6 @@
               <h2>${video.titulo}</h2>
               <p>${video.desc}</p>
             </div>
-            <a href="https://ko-fi.com" target="_blank" class="btn-buy">Apoyar / Donar</a>
           </div>`;
         cont.appendChild(art);
       });
