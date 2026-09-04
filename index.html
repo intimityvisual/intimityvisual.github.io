@@ -373,6 +373,27 @@
           gap: 10px !important;
         }
       }
+.botones-fila {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.botones-fila .support-banner,
+.botones-fila .cta-enter {
+  margin: 0 !important;
+  flex: 1 1 260px;
+  max-width: 320px;
+}
+
+@media (max-width: 600px) {
+  .botones-fila {
+    flex-direction: column;
+    align-items: center;
+  }
+}
 </style>
 </head>
 
@@ -390,11 +411,12 @@
     Un espacio de rol y contenido K-pop donde podrás familiarizarte y compartir con personas que tienen tus mismos gustos y hobbies. ¡Únete a la comunidad y diviértete con nosotros!
   </p>
 
-  <a href="https://ko-fi.com" target="_blank" class="support-banner">☕ Apóyame o pide tu edición personalizada</a>
-
-  <a href="https://t.me/Universe_idol/" target="_blank" class="cta-enter">
-    <span>Clickea aquí para entrar al mundo de UNIVERSE</span>
-  </a>
+ <div class="botones-fila">
+    <a href="https://ko-fi.com" target="_blank" class="support-banner">☕ Apóyame o pide tu edición personalizada</a>
+    <a href="https://t.me/TU_GRUPO_AQUI" target="_blank" class="cta-enter">
+      <span>Clickea aquí para entrar al mundo de UNIVERSE</span>
+    </a>
+  </div>
 </header>
 
 <div class="breadcrumb" id="breadcrumb"></div>
