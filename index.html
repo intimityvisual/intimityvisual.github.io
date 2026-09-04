@@ -316,6 +316,63 @@
 
   .view { display: none; }
   .view.active { display: block; }
+.view { display: none; }
+      .view.active { display: block; }
+
+      /* ==== Ajuste de galería estilo shorts/reels ==== */
+      .gallery {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 14px !important;
+      }
+
+      .gallery .card {
+        padding: 0 !important;
+        border-radius: 14px !important;
+        overflow: hidden !important;
+      }
+
+      .gallery .media-container {
+        aspect-ratio: 9 / 16 !important;
+        width: 100% !important;
+        height: auto !important;
+      }
+
+      .gallery .media-container iframe {
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      .gallery .card-info {
+        padding: 8px !important;
+      }
+
+      .gallery .card-info h2 {
+        font-size: 0.8rem !important;
+        line-height: 1.2;
+      }
+
+      .gallery .card-info p {
+        font-size: 0.7rem !important;
+      }
+
+      .gallery .btn-buy {
+        padding: 8px !important;
+        font-size: 0.75rem !important;
+      }
+
+      @media (max-width: 900px) {
+        .gallery {
+          grid-template-columns: repeat(3, 1fr) !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .gallery {
+          grid-template-columns: repeat(2, 1fr) !important;
+          gap: 10px !important;
+        }
+      }
 </style>
 </head>
 
@@ -398,7 +455,7 @@
   <div class="gallery" id="grupo-gallery"></div>
 </div>
 
-<footer>© 2026 Intimity Visual · Todos los derechos reservados.</footer>
+<footer>© 2026 Chocolala Mli · Todos los derechos reservados.</footer>
 
 <div class="lightbox" id="lightbox">
   <span class="close" id="close">&times;</span>
