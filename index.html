@@ -543,8 +543,8 @@ grupos.forEach(g => { videosPorGrupo[g] = []; });
 // Función para extraer el ID de YouTube desde cualquier enlace
 function obtenerYoutubeId(url) {
   if (!url) return '';
-  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
-  return match ? match[1] : url;
+  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|shorts\/|watch\?.+&v=))([\w-]{11})/);
+  return match ? match[1] : url.trim();
 }
 
 // Cargar datos desde Google Sheets
